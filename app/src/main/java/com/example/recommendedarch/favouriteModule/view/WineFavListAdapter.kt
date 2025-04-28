@@ -2,6 +2,8 @@ package com.example.recommendedarch.favouriteModule.view
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recommendedarch.BR
+import com.example.recommendedarch.common.utils.OnClickListener
+import com.example.recommendedarch.homeModule.view.WineDiff
 import com.example.recommendedarch.homeModule.view.WineListAdapter
 
 /****
@@ -18,7 +20,8 @@ import com.example.recommendedarch.homeModule.view.WineListAdapter
  * Coupons on my Website:
  * www.alainnicolastello.com
  ***/
-class WineFavListAdapter : WineListAdapter() {
+class WineFavListAdapter(listener: OnClickListener, diff: WineDiff) :
+    WineListAdapter(listener, diff) {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         (holder as ViewHolder).binding?.setVariable(BR.isFavModule, true)

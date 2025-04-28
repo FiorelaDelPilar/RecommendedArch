@@ -14,6 +14,7 @@ import com.example.recommendedarch.favouriteModule.model.FavouriteRepository
 import com.example.recommendedarch.favouriteModule.model.RoomDatabase
 import com.example.recommendedarch.favouriteModule.viewModel.FavouriteViewModel
 import com.example.recommendedarch.favouriteModule.viewModel.FavouriteViewModelFactory
+import com.example.recommendedarch.homeModule.view.WineDiff
 import com.google.android.material.snackbar.Snackbar
 
 /****
@@ -66,8 +67,7 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
 
 
     private fun setupAdapter() {
-        adapter = WineFavListAdapter()
-        adapter.setOnClickListener(this)
+        adapter = WineFavListAdapter(this, WineDiff())
     }
 
     private fun setupRecyclerView() {

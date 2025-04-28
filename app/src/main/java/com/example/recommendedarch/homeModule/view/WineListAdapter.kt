@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recommendedarch.BR
@@ -28,9 +27,10 @@ import com.example.recommendedarch.databinding.ItemWineBinding
  * Coupons on my Website:
  * www.alainnicolastello.com
  ***/
-open class WineListAdapter : ListAdapter<Wine, RecyclerView.ViewHolder>(WineDiff()) {
+open class WineListAdapter(private val listener: OnClickListener, diff: WineDiff) :
+    ListAdapter<Wine, RecyclerView.ViewHolder>(diff) {
 
-    lateinit var listener: OnClickListener
+    //lateinit var listener: OnClickListener
     private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -47,12 +47,7 @@ open class WineListAdapter : ListAdapter<Wine, RecyclerView.ViewHolder>(WineDiff
         }
     }
 
-    fun setOnClickListener(listener: OnClickListener) {
-        this.listener = listener
-    }
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //val binding = ItemWineBinding.bind(view)
         val binding = DataBindingUtil.bind<ItemWineBinding>(view) //inflar la vista
 
         fun setListener(wine: Wine) {
@@ -64,11 +59,5 @@ open class WineListAdapter : ListAdapter<Wine, RecyclerView.ViewHolder>(WineDiff
                 listener.onFavorite(wine)
             }
         }
-    }
-
-    private class WineDiff : DiffUtil.ItemCallback<Wine>() {
-        override fun areItemsTheSame(oldItem: Wine, newItem: Wine) = oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: Wine, newItem: Wine) = oldItem == newItem
     }
 }
