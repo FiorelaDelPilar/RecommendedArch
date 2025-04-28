@@ -20,6 +20,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 /****
  * Project: Wines
@@ -37,14 +39,13 @@ import kotlinx.coroutines.launch
  ***/
 class HomeFragment : WineBaseFragment(), OnClickListener {
 
-    private lateinit var adapter: WineListAdapter
+    private val adapter: WineListAdapter by inject { parametersOf(this) }
     private lateinit var vm: HomeViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-        setupAdapter()
         setupRecyclerView()
         setupObservers()
     }
@@ -67,10 +68,6 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
                 adapter.submitList(wines)
             }
         }
-    }
-
-    private fun setupAdapter() {
-        adapter = WineListAdapter(this, WineDiff())
     }
 
     private fun setupRecyclerView() {

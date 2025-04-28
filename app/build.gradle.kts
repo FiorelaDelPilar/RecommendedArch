@@ -48,6 +48,7 @@ val roomVersion = "2.6.1"
 val lifecycleVersion = "2.7.0"
 val navigationVersion = "2.8.9"
 val retrofitVersion = "2.9.0"
+val koinVersion = "3.5.3"
 
 dependencies {
     implementation("androidx.core:core-ktx:$androidxCoreVersion")
@@ -64,8 +65,8 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     // Glide
-    implementation (libs.glide)
-    ksp (libs.ksp)
+    implementation(libs.glide)
+    ksp(libs.ksp)
 
     // SwipeRefreshLayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshVersion")
@@ -83,6 +84,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     //LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+
+    //Koin Android
+    implementation("io.insert-koin:koin-android:$koinVersion")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
