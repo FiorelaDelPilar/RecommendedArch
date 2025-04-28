@@ -9,8 +9,8 @@ open class BaseWineViewModel : ViewModel() {
     private val _inProgess = MutableLiveData<Boolean>()
     val inProgess: LiveData<Boolean> = _inProgess
 
-    private val _snackbarMsg = MutableLiveData<Int>()
-    val snackbarMsg: LiveData<Int> = _snackbarMsg
+    private val _snackbarMsg = MutableLiveData<Int?>()
+    val snackbarMsg: LiveData<Int?> = _snackbarMsg
 
     private val _wines = MutableLiveData<List<Wine>>()
     val wines: LiveData<List<Wine>> = _wines
@@ -19,7 +19,7 @@ open class BaseWineViewModel : ViewModel() {
         _inProgess.postValue(value)
     }
 
-    protected fun setSnackbarMsg(value: Int) {
+    protected fun setSnackbarMsg(value: Int?) {
         _snackbarMsg.postValue(value)
     }
 

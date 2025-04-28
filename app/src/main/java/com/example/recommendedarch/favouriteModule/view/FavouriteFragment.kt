@@ -56,7 +56,7 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
     private fun setupObservers() {
         binding.viewModel?.let { vm ->
             vm.snackbarMsg.observe(viewLifecycleOwner) { resMsg ->
-                showMsg(resMsg)
+                resMsg?.let { showMsg(resMsg) }
             }
             vm.wines.observe(viewLifecycleOwner) { wines ->
                 adapter.submitList(wines)

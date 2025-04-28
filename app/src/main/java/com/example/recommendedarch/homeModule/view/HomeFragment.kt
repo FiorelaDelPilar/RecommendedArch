@@ -61,7 +61,7 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
     private fun setupObservers() {
         binding.viewModel?.let { vm ->
             vm.snackbarMsg.observe(viewLifecycleOwner) { resMsg ->
-                showMsg(resMsg)
+                resMsg?.let { showMsg(resMsg) }
             }
             vm.wines.observe(viewLifecycleOwner) { wines ->
                 adapter.submitList(wines)
@@ -83,6 +83,11 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
 
     private fun showMsg(msgRes: Int) {
         Snackbar.make(binding.root, msgRes, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        vm.onPause()
     }
 
     /*
