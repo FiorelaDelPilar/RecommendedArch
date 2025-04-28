@@ -11,7 +11,7 @@ import com.example.recommendedarch.common.utils.OnClickListener
 import com.example.recommendedarch.common.entities.Wine
 import com.example.recommendedarch.common.view.WineBaseFragment
 import com.example.recommendedarch.favouriteModule.model.FavouriteRepository
-import com.example.recommendedarch.favouriteModule.model.RoomDatabase
+import com.example.recommendedarch.favouriteModule.model.domain.FavouriteRoomDatabase
 import com.example.recommendedarch.favouriteModule.viewModel.FavouriteViewModel
 import com.example.recommendedarch.favouriteModule.viewModel.FavouriteViewModelFactory
 import com.example.recommendedarch.homeModule.view.WineDiff
@@ -48,7 +48,7 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
     private fun setupViewModel() {
         vm = ViewModelProvider(
             this,
-            FavouriteViewModelFactory(FavouriteRepository(RoomDatabase()))
+            FavouriteViewModelFactory(FavouriteRepository(FavouriteRoomDatabase()))
         )[FavouriteViewModel::class.java]
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
