@@ -46,7 +46,7 @@ val glideVersion = "4.16.0"
 val swipeRefreshVersion = "1.2.0-alpha01"
 val roomVersion = "2.6.1"
 val lifecycleVersion = "2.7.0"
-val navigationVersion = "2.7.6"
+val navigationVersion = "2.8.9"
 val retrofitVersion = "2.9.0"
 
 dependencies {
@@ -60,20 +60,20 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:$glideVersion")
-    ksp ("com.github.bumptech.glide:ksp:$glideVersion")
+    implementation (libs.glide)
+    ksp (libs.ksp)
 
     // SwipeRefreshLayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshVersion")
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.converter.scalars)
 
     //Room
     implementation("androidx.room:room-runtime:$roomVersion")
