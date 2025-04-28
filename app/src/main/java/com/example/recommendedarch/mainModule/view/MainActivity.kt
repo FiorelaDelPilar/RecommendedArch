@@ -3,11 +3,13 @@ package com.example.recommendedarch.mainModule.view
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.recommendedarch.R
-import com.example.recommendedarch.loginModule.view.LoginFragment
+import com.example.recommendedarch.common.viewModel.ShareViewModel
 import com.example.recommendedarch.databinding.ActivityMainBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /****
  * Project: Wines
@@ -26,25 +28,31 @@ import com.example.recommendedarch.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
+
+    private val vm: ShareViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        launchLoginUI()
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController = findNavController(R.id.nav_host_fragment_activity_main)
         binding.navView.setupWithNavController(navController)
+
+        launchLoginUI()
+        setupObservers()
+    }
+
+    private fun setupObservers() {
+        vm.showNavView.observe(this) { showNavView ->
+            setupNavView(showNavView)
+        }
     }
 
     fun launchLoginUI() {
-        val fragment = LoginFragment()
-        supportFragmentManager.beginTransaction().apply {
-            add(R.id.container_main, fragment)
-                .commit()
-        }
+        navController.navigate(R.id.navigation_login)
     }
 
     fun setupNavView(isVisible: Boolean) {

@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.recommendedarch.BR
-import com.example.recommendedarch.mainModule.view.MainActivity
+import com.example.recommendedarch.R
+import com.example.recommendedarch.common.viewModel.ShareViewModel
 import com.example.recommendedarch.databinding.FragmentLoginBinding
 import com.example.recommendedarch.loginModule.viewModel.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 /****
  * Project: Wines
@@ -30,6 +33,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
+    private val sVm: ShareViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,11 +73,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun closeLoginUI() {
-        (requireActivity() as MainActivity).setupNavView(true)
-        requireActivity().supportFragmentManager.beginTransaction().apply {
-            remove(this@LoginFragment)
-                .commit()
-        }
+        sVm.showNavView.value = true
+        findNavController().navigate(R.id.navigation_home)
     }
 
     override fun onPause() {
