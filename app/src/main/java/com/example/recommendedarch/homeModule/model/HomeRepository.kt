@@ -6,6 +6,8 @@ import kotlin.random.Random
 import com.example.recommendedarch.common.entities.Wine
 import com.example.recommendedarch.common.model.BaseRepository
 import com.example.recommendedarch.common.utils.Constants
+import com.example.recommendedarch.homeModule.model.domain.HomeRoomDatabase
+import com.example.recommendedarch.homeModule.model.domain.HomeWineService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

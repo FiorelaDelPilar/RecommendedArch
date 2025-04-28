@@ -1,7 +1,7 @@
 package com.example.recommendedarch.common.di
 
-import com.example.recommendedarch.homeModule.model.HomeRoomDatabase
-import com.example.recommendedarch.homeModule.model.HomeWineService
+import com.example.recommendedarch.homeModule.model.domain.HomeRoomDatabase
+import com.example.recommendedarch.homeModule.model.domain.HomeWineService
 import org.koin.dsl.module
 
 val domainModule = module {
