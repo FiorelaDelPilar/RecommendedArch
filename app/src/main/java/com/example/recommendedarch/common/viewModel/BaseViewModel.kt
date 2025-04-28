@@ -9,7 +9,7 @@ import com.example.recommendedarch.common.utils.Constants
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class BaseViewModel : ViewModel() {
+open class BaseViewModel : ViewModel() {
     private val _inProgess = MutableLiveData<Boolean>()
     val inProgess: LiveData<Boolean> = _inProgess
 
