@@ -2,13 +2,16 @@ package com.example.recommendedarch.favouriteModule.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recommendedarch.BR
-import com.example.recommendedarch.updateModule.view.UpdateDialogFragment
+import com.example.recommendedarch.R
 import com.example.recommendedarch.common.utils.Constants
 import com.example.recommendedarch.common.utils.OnClickListener
 import com.example.recommendedarch.common.entities.Wine
 import com.example.recommendedarch.common.view.WineBaseFragment
+import com.example.recommendedarch.common.viewModel.ShareFragmentViewModel
 import com.example.recommendedarch.favouriteModule.viewModel.FavouriteViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
@@ -31,6 +34,7 @@ import org.koin.core.parameter.parametersOf
 class FavouriteFragment : WineBaseFragment(), OnClickListener {
 
     private val adapter: WineFavListAdapter by inject { parametersOf(this) }
+    private val sVm: ShareFragmentViewModel by activityViewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +59,9 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
             vm.wines.observe(viewLifecycleOwner) { wines ->
                 adapter.submitList(wines)
             }
+        }
+        sVm.isDismiss.observe(viewLifecycleOwner) {
+            binding.viewModel?.getAllWines()
         }
     }
 
@@ -82,15 +89,8 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
     }
 
     override fun onLongClick(wine: Wine) {
-        val fragmentManager = childFragmentManager
-        val fragment = UpdateDialogFragment()
         val args = Bundle()
         args.putDouble(Constants.ARG_ID, wine.id)
-        fragment.arguments = args
-        fragment.show(fragmentManager, UpdateDialogFragment::class.java.simpleName)
-        fragment.setOnUpdateListener {
-            binding.srlResults.isRefreshing = true
-            binding.viewModel?.getAllWines()
-        }
+        findNavController().navigate(R.id.navigation_update, args)
     }
 }

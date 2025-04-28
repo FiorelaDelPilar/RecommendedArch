@@ -15,7 +15,7 @@
         android:id="@+id/navigation_favourite"
         android:name="com.example.recommendedarch.favouriteModule.view.FavouriteFragment"
         android:label="@string/favourite_title"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_promo"
@@ -28,4 +28,10 @@
         android:name="com.example.recommendedarch.accountModule.view.AccountFragment"
         android:label="@string/account_title"
         tools:layout="@layout/fragment_account" />
+
+    <dialog
+        android:id="@+id/navigation_update"
+        android:name="com.example.recommendedarch.updateModule.view.UpdateDialogFragment"
+        android:label="@string/dialog_update_title"
+        tools:layout="@layout/fragment_dialog_update" />
 </navigation>
