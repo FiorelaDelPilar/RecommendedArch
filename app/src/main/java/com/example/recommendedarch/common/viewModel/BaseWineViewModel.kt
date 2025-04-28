@@ -13,5 +13,4 @@ open class BaseWineViewModel : BaseViewModel() {
     }
 
     open fun getAllWines() {}
-    open fun addWine(wine: Wine) {}
 }

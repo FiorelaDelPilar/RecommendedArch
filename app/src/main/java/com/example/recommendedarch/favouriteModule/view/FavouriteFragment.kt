@@ -69,6 +69,11 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
         Snackbar.make(binding.root, msgRes, Snackbar.LENGTH_SHORT).show()
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.viewModel?.onPause()
+    }
+
     /*
     * OnClickListener
     * */

@@ -10,7 +10,7 @@ class HomeViewModel(private val repository: HomeRepository) : BaseWineViewModel(
         getAllWines()
     }
 
-    override fun onPause() = clearValue()
+    override fun onPause() = clearValues()
 
     override fun getAllWines() {
         executeAction {
@@ -20,7 +20,7 @@ class HomeViewModel(private val repository: HomeRepository) : BaseWineViewModel(
         }
     }
 
-    override fun addWine(wine: Wine) {
+    fun addWine(wine: Wine) {
         executeAction {
             repository.addWine(wine) {
                 setSnackbarMsg(R.string.room_save_success)

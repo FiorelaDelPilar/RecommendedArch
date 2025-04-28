@@ -24,4 +24,6 @@ class FavouriteViewModel(private val repository: FavouriteRepository) : BaseWine
             }
         }
     }
+
+    override fun onPause() = clearValues()
 }

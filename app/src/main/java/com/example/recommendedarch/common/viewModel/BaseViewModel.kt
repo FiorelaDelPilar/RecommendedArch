@@ -27,7 +27,7 @@ open class BaseViewModel : ViewModel() {
     open fun onPause() {
     }
 
-    protected fun clearValue() {
+    protected fun clearValues() {
         setSnackbarMsg(null)
     }
 
