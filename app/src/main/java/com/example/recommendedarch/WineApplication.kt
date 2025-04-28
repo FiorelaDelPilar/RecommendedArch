@@ -4,6 +4,11 @@ import android.app.Application
 import androidx.room.Room
 import com.example.recommendedarch.common.dataAccess.room.WineDatabase
 import com.example.recommendedarch.common.di.adapterModule
+import com.example.recommendedarch.common.di.dataSourceModule
+import com.example.recommendedarch.common.di.domainModule
+import com.example.recommendedarch.common.di.modelModule
+import com.example.recommendedarch.common.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 /****
@@ -29,13 +34,13 @@ class WineApplication : Application() {
         super.onCreate()
 
         startKoin {
-            modules(adapterModule)
+            androidContext(this@WineApplication)
+            modules(adapterModule, viewModelModule, modelModule, domainModule, dataSourceModule)
         }
         database = Room.databaseBuilder(
             this,
             WineDatabase::class.java,
             "WineDatabase"
-        )
-            .build()
+        ).build()
     }
 }

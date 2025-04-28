@@ -9,7 +9,7 @@ import com.example.recommendedarch.common.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class HomeRepository(private val db: RoomDatabase, private val service: WineService) :
+class HomeRepository(private val db: HomeRoomDatabase, private val service: HomeWineService) :
     BaseRepository() {
 
     suspend fun getAllWines(callback: (List<Wine>) -> Unit) = withContext(Dispatchers.IO) {

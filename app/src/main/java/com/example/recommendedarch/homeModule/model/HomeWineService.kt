@@ -1,13 +1,11 @@
 package com.example.recommendedarch.homeModule.model
 
 import com.example.recommendedarch.common.dataAccess.retrofit.WineService
-import com.example.recommendedarch.common.utils.Constants
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class WineService {
-    suspend fun getRedWines() = getService().getRedWines()
+class HomeWineService(private val service: WineService) {
+    suspend fun getRedWines() = service.getRedWines()
 
+  /*
     private fun getService(): WineService {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -15,4 +13,5 @@ class WineService {
             .build()
         return retrofit.create(WineService::class.java)
     }
+   */
 }

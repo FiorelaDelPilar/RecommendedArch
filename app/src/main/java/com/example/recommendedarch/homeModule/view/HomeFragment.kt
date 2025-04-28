@@ -2,7 +2,6 @@ package com.example.recommendedarch.homeModule.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -11,11 +10,7 @@ import com.example.recommendedarch.R
 import com.example.recommendedarch.common.utils.OnClickListener
 import com.example.recommendedarch.common.entities.Wine
 import com.example.recommendedarch.common.view.WineBaseFragment
-import com.example.recommendedarch.homeModule.model.HomeRepository
-import com.example.recommendedarch.homeModule.model.RoomDatabase
-import com.example.recommendedarch.homeModule.model.WineService
 import com.example.recommendedarch.homeModule.viewModel.HomeViewModel
-import com.example.recommendedarch.homeModule.viewModel.HomeViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +35,8 @@ import org.koin.core.parameter.parametersOf
 class HomeFragment : WineBaseFragment(), OnClickListener {
 
     private val adapter: WineListAdapter by inject { parametersOf(this) }
-    private lateinit var vm: HomeViewModel
+    //private lateinit var vm: HomeViewModel
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,10 +47,13 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
     }
 
     private fun setupViewModel() {
-        vm = ViewModelProvider(
-            this,
-            HomeViewModelFactory(HomeRepository(RoomDatabase(), WineService()))
-        )[HomeViewModel::class.java]
+        /*
+         vm = ViewModelProvider(
+             this,
+             HomeViewModelFactory(HomeRepository(HomeRoomDatabase(), HomeWineService()))
+         )[HomeViewModel::class.java]
+         */
+        val vm: HomeViewModel by inject()
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
@@ -83,7 +82,7 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
 
     override fun onPause() {
         super.onPause()
-        vm.onPause()
+        binding.viewModel?.onPause()
     }
 
     /*
@@ -107,7 +106,7 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
     private fun addToFavourites(wine: Wine) {
         lifecycleScope.launch(Dispatchers.IO) {
             wine.isFavorite = true
-            vm.addWine(wine)
+            binding.viewModel?.addWine(wine)
         }
     }
 }
