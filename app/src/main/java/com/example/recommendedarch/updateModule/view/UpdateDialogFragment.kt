@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.recommendedarch.R
 import com.example.recommendedarch.common.utils.Constants
 import com.example.recommendedarch.databinding.FragmentDialogUpdateBinding
-import com.example.recommendedarch.updateModule.model.RoomDatabase
+import com.example.recommendedarch.updateModule.model.domain.UpdateRoomDatabase
 import com.example.recommendedarch.updateModule.model.UpdateRepository
 import com.example.recommendedarch.updateModule.viewModel.UpdateViewModel
 import com.example.recommendedarch.updateModule.viewModel.UpdateViewModelFactory
@@ -92,7 +92,7 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
     private fun setupViewModel() {
         vm = ViewModelProvider(
             this,
-            UpdateViewModelFactory(UpdateRepository(RoomDatabase()))
+            UpdateViewModelFactory(UpdateRepository(UpdateRoomDatabase()))
         )[UpdateViewModel::class.java]
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
