@@ -1,8 +1,6 @@
 package com.example.recommendedarch
 
 import android.app.Application
-import androidx.room.Room
-import com.example.recommendedarch.common.dataAccess.room.WineDatabase
 import com.example.recommendedarch.common.di.adapterModule
 import com.example.recommendedarch.common.di.dataSourceModule
 import com.example.recommendedarch.common.di.domainModule
@@ -26,10 +24,6 @@ import org.koin.core.context.startKoin
  * www.alainnicolastello.com
  ***/
 class WineApplication : Application() {
-    companion object {
-        lateinit var database: WineDatabase
-    }
-
     override fun onCreate() {
         super.onCreate()
 
@@ -37,10 +31,5 @@ class WineApplication : Application() {
             androidContext(this@WineApplication)
             modules(adapterModule, viewModelModule, modelModule, domainModule, dataSourceModule)
         }
-        database = Room.databaseBuilder(
-            this,
-            WineDatabase::class.java,
-            "WineDatabase"
-        ).build()
     }
 }

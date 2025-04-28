@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.recommendedarch.BR
 import com.example.recommendedarch.mainModule.view.MainActivity
-import com.example.recommendedarch.common.dataAccess.local.FakeFirebaseAuth
 import com.example.recommendedarch.databinding.FragmentLoginBinding
-import com.example.recommendedarch.loginModule.model.LoginRepository
 import com.example.recommendedarch.loginModule.viewModel.LoginViewModel
-import com.example.recommendedarch.loginModule.viewModel.LoginViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 /****
  * Project: Wines
@@ -32,7 +29,7 @@ import com.google.android.material.snackbar.Snackbar
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private lateinit var vm: LoginViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,15 +43,11 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-        setupButtons()
         setupObservers()
     }
 
     private fun setupViewModel() {
-        vm = ViewModelProvider(
-            this,
-            LoginViewModelFactory(LoginRepository(FakeFirebaseAuth()))
-        )[LoginViewModel::class.java]
+        val vm: LoginViewModel by inject()
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
@@ -62,19 +55,11 @@ class LoginFragment : Fragment() {
     private fun setupObservers() {
         binding.viewModel?.let { vm ->
             vm.snackbarMsg.observe(viewLifecycleOwner) { resMsg ->
-                showMsg(resMsg)
+                resMsg?.let { showMsg(resMsg) }
             }
 
             vm.isAuthValid.observe(viewLifecycleOwner) { isValid ->
                 if (isValid) closeLoginUI()
-            }
-        }
-    }
-
-    private fun setupButtons() {
-        with(binding) {
-            btnLogin.setOnClickListener {
-                vm.login(etUsername.text.toString(), etPin.text.toString())
             }
         }
     }
@@ -89,6 +74,11 @@ class LoginFragment : Fragment() {
             remove(this@LoginFragment)
                 .commit()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.viewModel?.onPause()
     }
 
     override fun onDestroyView() {

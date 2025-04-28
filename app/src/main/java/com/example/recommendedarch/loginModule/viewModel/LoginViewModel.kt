@@ -6,7 +6,7 @@ import com.example.recommendedarch.common.viewModel.BaseViewModel
 import com.example.recommendedarch.loginModule.model.LoginRepository
 
 class LoginViewModel(private val repository: LoginRepository) : BaseViewModel() {
-    val username = MutableLiveData("cursoant")
+    val username = MutableLiveData("cursosant")
     val pin = MutableLiveData("1234")
 
     private val _isAuthValid = MutableLiveData<Boolean>()
