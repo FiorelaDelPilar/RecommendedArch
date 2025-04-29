@@ -13,10 +13,11 @@ import com.example.recommendedarch.BR
 import com.example.recommendedarch.R
 import com.example.recommendedarch.accountModule.viewModel.AccountViewModel
 import com.example.recommendedarch.common.utils.Constants
+import com.example.recommendedarch.common.viewModel.ShareViewModel
 import com.example.recommendedarch.databinding.FragmentAccountBinding
-import com.example.recommendedarch.mainModule.view.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 /****
  * Project: Wines
@@ -36,6 +37,8 @@ class AccountFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
+
+    private val sVm by activityViewModel<ShareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,12 +68,7 @@ class AccountFragment : Fragment() {
             }
 
             vm.isSignOut.observe(viewLifecycleOwner) { isSignOut ->
-                if (isSignOut) {
-                    (requireActivity() as MainActivity).apply {
-                        setupNavView(false)
-                        launchLoginUI()
-                    }
-                }
+                sVm.isSignOut.value = isSignOut
             }
         }
     }
