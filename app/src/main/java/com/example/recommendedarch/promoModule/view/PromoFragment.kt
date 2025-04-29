@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recommendedarch.databinding.FragmentPromoBinding
-import com.example.recommendedarch.promoModule.model.domain.PromoDatabase
-import com.example.recommendedarch.promoModule.model.PromoRepository
 import com.example.recommendedarch.promoModule.viewModel.PromoViewModel
-import com.example.recommendedarch.promoModule.viewModel.PromoViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 /****
  * Project: Wines
@@ -33,8 +30,7 @@ class PromoFragment : Fragment() {
     private var _binding: FragmentPromoBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: PromoListAdapter
-    private lateinit var vm: PromoViewModel
+    private val adapter: PromoListAdapter by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,16 +44,12 @@ class PromoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-        setupAdapter()
         setupRecyclerView()
         setupObservers()
     }
 
     private fun setupViewModel() {
-        vm = ViewModelProvider(
-            this,
-            PromoViewModelFactory(PromoRepository(PromoDatabase()))
-        )[PromoViewModel::class.java]
+        val vm: PromoViewModel by inject()
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
@@ -65,17 +57,13 @@ class PromoFragment : Fragment() {
     private fun setupObservers() {
         binding.viewModel?.let { vm ->
             vm.snackbarMsg.observe(viewLifecycleOwner) { resMsg ->
-                showMsg(resMsg)
+                resMsg?.let { showMsg(resMsg) }
             }
 
             vm.promos.observe(viewLifecycleOwner) { promos ->
                 adapter.submitList(promos)
             }
         }
-    }
-
-    private fun setupAdapter() {
-        adapter = PromoListAdapter()
     }
 
     private fun setupRecyclerView() {
@@ -88,6 +76,11 @@ class PromoFragment : Fragment() {
 
     private fun showMsg(msgRes: Int) {
         Snackbar.make(binding.root, msgRes, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.viewModel?.onPause()
     }
 
     override fun onDestroy() {

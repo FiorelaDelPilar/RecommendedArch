@@ -7,6 +7,7 @@ import com.example.recommendedarch.common.di.dataSourceModule
 import com.example.recommendedarch.common.di.domainModule
 import com.example.recommendedarch.common.di.modelModule
 import com.example.recommendedarch.common.di.viewModelModule
+import com.example.recommendedarch.promoModule.di.promoModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -36,7 +37,8 @@ class WineApplication : Application() {
                 modelModule,
                 domainModule,
                 dataSourceModule,
-                accountModule
+                accountModule,
+                promoModule
             )
         }
     }
