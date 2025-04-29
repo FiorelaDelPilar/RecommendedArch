@@ -1,4 +1,4 @@
-package com.example.recommendedarch.promoModule.view
+package com.example.recommendedarch.promoModule.view.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import com.example.recommendedarch.BR
 import com.example.recommendedarch.R
 import com.example.recommendedarch.common.entities.Promo
 import com.example.recommendedarch.databinding.ItemPromoBinding
-import com.example.recommendedarch.promoModule.view.adapters.PromoDiff
 
 /****
  * Project: Wines

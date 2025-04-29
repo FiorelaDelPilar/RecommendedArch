@@ -8,6 +8,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recommendedarch.databinding.FragmentPromoBinding
+import com.example.recommendedarch.promoModule.view.adapters.PromoListAdapter
 import com.example.recommendedarch.promoModule.viewModel.PromoViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
