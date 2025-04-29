@@ -2,17 +2,11 @@ package com.example.recommendedarch.promoModule.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.recommendedarch.common.entities.MyException
 import com.example.recommendedarch.common.entities.Promo
+import com.example.recommendedarch.common.viewModel.BaseViewModel
 import com.example.recommendedarch.promoModule.model.PromoRepository
-import kotlinx.coroutines.launch
 
-class PromoViewModel(private val repository: PromoRepository) : ViewModel() {
-    private val _snackbarMsg = MutableLiveData<Int>()
-    val snackbarMsg: LiveData<Int> = _snackbarMsg
-
+class PromoViewModel(private val repository: PromoRepository) : BaseViewModel() {
     private val _promos = MutableLiveData<List<Promo>>()
     val promos: LiveData<List<Promo>> = _promos
 
@@ -21,13 +15,12 @@ class PromoViewModel(private val repository: PromoRepository) : ViewModel() {
     }
 
     private fun getPromos() {
-        viewModelScope.launch {
-            try {
-                val result = repository.getPromos()
+        executeAction {
+            repository.getPromos { result ->
                 _promos.value = result
-            } catch (e: MyException) {
-                _snackbarMsg.value = e.resMsg
             }
         }
     }
+
+    override fun onPause() = clearValues()
 }
