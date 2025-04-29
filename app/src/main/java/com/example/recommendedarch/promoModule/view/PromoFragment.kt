@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recommendedarch.databinding.FragmentPromoBinding
-import com.example.recommendedarch.promoModule.model.Database
+import com.example.recommendedarch.promoModule.model.domain.PromoDatabase
 import com.example.recommendedarch.promoModule.model.PromoRepository
 import com.example.recommendedarch.promoModule.viewModel.PromoViewModel
 import com.example.recommendedarch.promoModule.viewModel.PromoViewModelFactory
@@ -56,7 +56,7 @@ class PromoFragment : Fragment() {
     private fun setupViewModel() {
         vm = ViewModelProvider(
             this,
-            PromoViewModelFactory(PromoRepository(Database()))
+            PromoViewModelFactory(PromoRepository(PromoDatabase()))
         )[PromoViewModel::class.java]
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
