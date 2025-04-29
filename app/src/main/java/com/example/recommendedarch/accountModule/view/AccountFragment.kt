@@ -7,19 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.recommendedarch.common.utils.Constants
-import com.example.recommendedarch.common.dataAccess.local.FakeFirebaseAuth
-import com.example.recommendedarch.mainModule.view.MainActivity
-import com.example.recommendedarch.R
-import com.example.recommendedarch.accountModule.model.AccountRepository
-import com.example.recommendedarch.accountModule.viewModel.AccountViewModel
-import com.example.recommendedarch.accountModule.viewModel.AccountViewModelFactory
-import com.example.recommendedarch.databinding.FragmentAccountBinding
-import com.google.android.material.snackbar.Snackbar
-import com.example.recommendedarch.BR
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
+import com.example.recommendedarch.BR
+import com.example.recommendedarch.R
+import com.example.recommendedarch.accountModule.viewModel.AccountViewModel
+import com.example.recommendedarch.common.utils.Constants
+import com.example.recommendedarch.databinding.FragmentAccountBinding
+import com.example.recommendedarch.mainModule.view.MainActivity
+import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 /****
  * Project: Wines
@@ -39,7 +36,6 @@ class AccountFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
-    private lateinit var vm: AccountViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,12 +53,7 @@ class AccountFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        vm =
-            ViewModelProvider(
-                this,
-                AccountViewModelFactory(AccountRepository(FakeFirebaseAuth()))
-            )[AccountViewModel::class.java]
-
+        val vm: AccountViewModel by inject()
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
@@ -70,7 +61,7 @@ class AccountFragment : Fragment() {
     private fun setupObservers() {
         binding.viewModel?.let { vm ->
             vm.snackbarMsg.observe(viewLifecycleOwner) { resMsg ->
-                showMsg(resMsg)
+                resMsg?.let { showMsg(resMsg) }
             }
 
             vm.isSignOut.observe(viewLifecycleOwner) { isSignOut ->
@@ -117,6 +108,11 @@ class AccountFragment : Fragment() {
 
     private fun showMsg(msgRes: Int) {
         Snackbar.make(binding.root, msgRes, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.viewModel?.onPause()
     }
 
     override fun onDestroyView() {

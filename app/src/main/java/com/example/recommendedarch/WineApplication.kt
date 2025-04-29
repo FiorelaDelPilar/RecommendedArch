@@ -1,6 +1,7 @@
 package com.example.recommendedarch
 
 import android.app.Application
+import com.example.recommendedarch.accountModule.di.accountModule
 import com.example.recommendedarch.common.di.adapterModule
 import com.example.recommendedarch.common.di.dataSourceModule
 import com.example.recommendedarch.common.di.domainModule
@@ -29,7 +30,14 @@ class WineApplication : Application() {
 
         startKoin {
             androidContext(this@WineApplication)
-            modules(adapterModule, viewModelModule, modelModule, domainModule, dataSourceModule)
+            modules(
+                adapterModule,
+                viewModelModule,
+                modelModule,
+                domainModule,
+                dataSourceModule,
+                accountModule
+            )
         }
     }
 }
